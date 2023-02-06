@@ -28,7 +28,7 @@ class _IntroState extends State<Intro> {
 
   @override
   void initState() {
-    Timer.periodic(Duration(seconds: 1), (_) {
+    Timer.periodic(Duration(seconds: 5), (_) {
       setState(() {
         if (i == myIntros.length - 1) {
           i = 0;
