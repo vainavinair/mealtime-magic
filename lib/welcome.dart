@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import './intro.dart';
+import './home_page.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -45,7 +46,12 @@ class _WelcomePageState extends State<WelcomePage> {
               height: 48,
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomePage()));
+                  },
                   child: Text("CONTINUE"),
                   style: ElevatedButton.styleFrom(
                     elevation: 16,
