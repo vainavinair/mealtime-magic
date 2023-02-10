@@ -1,7 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Intro extends StatefulWidget {
@@ -28,6 +28,7 @@ class _IntroState extends State<Intro> {
 
   @override
   void initState() {
+    super.initState();
     Timer.periodic(Duration(seconds: 5), (_) {
       setState(() {
         if (i == myIntros.length - 1) {

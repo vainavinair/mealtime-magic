@@ -1,16 +1,11 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last
 import 'package:flutter/material.dart';
 import './intro.dart';
 import './home_page.dart';
 
-class WelcomePage extends StatefulWidget {
+class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
 
-  @override
-  State<WelcomePage> createState() => _WelcomePageState();
-}
-
-class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +31,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 SizedBox(
                   height: 50,
                 ),
-                Container(height: 80, child: Intro()),
+                SizedBox(height: 80, child: Intro()), //calling intro widget
               ],
             ),
           ),

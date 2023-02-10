@@ -1,25 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_new
 
-import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
-import 'models/recipe.dart';
+import './search_bar.dart';
+import 'show_recipe.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  List<Recipe> recipeList = <Recipe>[];
-
-  TextEditingController searchController = new TextEditingController();
-  String url =
-      "https://api.edamam.com/api/recipes/v2?type=public&q=chicken&app_id=ed8282b8&app_key=8a4d8c94b108fd3185d0d43e332d4768";
 
   @override
   Widget build(BuildContext context) {
@@ -43,33 +30,7 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(30),
                       color: Colors.white,
                     ),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          child: Icon(
-                            Icons.search,
-                            color: Color(0xffC26522),
-                          ),
-                          onTap: () {
-                            _submitData(searchController.text);
-                          },
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: TextField(
-                            controller: searchController,
-                            decoration: InputDecoration(
-                              hintText: "Search for a recipe",
-                              border: InputBorder.none,
-                            ),
-                            onSubmitted: (_) =>
-                                _submitData(searchController.text),
-                          ),
-                        )
-                      ],
-                    ),
+                    child: SearchBar(),
                   ),
                 ),
                 Container(
@@ -90,40 +51,13 @@ class _HomePageState extends State<HomePage> {
                         ]),
                   ),
                 ),
-                Container(
-                  child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: 112,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Text("dete");
-                      }),
-                )
+                ShowRecipe(),
               ],
             ),
           ),
         ],
       ),
     );
-  }
-
-  _submitData(String query) async {
-    String url =
-        'https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=ed8282b8&app_key=8a4d8c94b108fd3185d0d43e332d4768';
-    var response = await get(Uri.parse(url));
-    Map data = jsonDecode(response.body);
-    // print(data);
-
-    data['hits'].forEach((element) {
-      Recipe recipe = new Recipe();
-      recipe = Recipe.fromMap(element["recipe"]);
-      recipeList.add(recipe);
-    });
-    // log(recipeList.toString());
-
-    recipeList.forEach((element) {
-      print(element.label);
-    });
   }
 }
 
