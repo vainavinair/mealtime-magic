@@ -1,5 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
 
+import 'package:mealtime_magic/recipe_view.dart';
+
 import './models/recipe.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +19,11 @@ class ShowRecipe extends StatelessWidget {
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
-                return;
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            RecipeView(recipeList[index].url)));
               },
               child: Card(
                 margin: EdgeInsets.all(20),
@@ -38,7 +44,7 @@ class ShowRecipe extends StatelessWidget {
                         children: [
                           Text(recipeList[index].label),
                           Text(recipeList[index].cuisineType),
-                          Text(recipeList[index].totalTime.toString()),
+                          Text(recipeList[index].totalTime.toString())
                         ],
                       ),
                     ),
