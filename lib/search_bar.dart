@@ -7,26 +7,7 @@ import 'dart:convert';
 import 'package:http/http.dart';
 
 class SearchBar extends StatelessWidget {
-  final Function addNew;
-  final Function clearList;
-  SearchBar(this.addNew, this.clearList);
-
   TextEditingController searchController = TextEditingController();
-
-  _search(String query) async {
-    String url =
-        'https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=ed8282b8&app_key=8a4d8c94b108fd3185d0d43e332d4768';
-    var response = await get(Uri.parse(url));
-    Map data = jsonDecode(response.body);
-    clearList();
-
-    data['hits'].forEach((element) {
-      Recipe recipe = Recipe();
-      recipe = Recipe.fromMap(element["recipe"]);
-      addNew(recipe);
-    });
-    searchController.text = "";
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +19,10 @@ class SearchBar extends StatelessWidget {
             color: Color(0xffC26522),
           ),
           onTap: () {
-            _search(searchController.text);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: ((context) => ShowRecipe(searchController.text))));
           },
         ),
         SizedBox(
@@ -51,7 +35,12 @@ class SearchBar extends StatelessWidget {
               hintText: "Search for a recipe",
               border: InputBorder.none,
             ),
-            onSubmitted: (_) => _search(searchController.text),
+            // onSubmitted: (_) => _search(searchController.text),
+            onSubmitted: ((value) => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: ((context) =>
+                        ShowRecipe(searchController.text))))),
           ),
         )
       ],

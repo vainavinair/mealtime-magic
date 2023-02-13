@@ -3,33 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import './search_bar.dart';
-import 'show_recipe.dart';
-import './models/recipe.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  List<Recipe> recipeList = <Recipe>[];
-  void clearList() {
-    setState(() {
-      recipeList.clear();
-    });
-  }
-
-  void _addNew(Recipe recipe) {
-    setState(() {
-      recipeList.add(recipe);
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    print("object");
     return Scaffold(
       body: Stack(
         children: [
@@ -50,7 +29,7 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(30),
                       color: Colors.white,
                     ),
-                    child: SearchBar(_addNew, clearList),
+                    child: SearchBar(),
                   ),
                 ),
                 Container(
@@ -71,7 +50,6 @@ class _HomePageState extends State<HomePage> {
                         ]),
                   ),
                 ),
-                ShowRecipe(recipeList),
               ],
             ),
           ),
