@@ -21,9 +21,9 @@ class ApiHandler {
     return recipeList;
   }
 
-  static Future<List<Recipe>> random() async {
-    String url =
-        'https://api.edamam.com/api/recipes/v2?type=public&app_id=ed8282b8&app_key=%208a4d8c94b108fd3185d0d43e332d4768%09&imageSize=REGULAR&random=true';
+  static Future<List<Recipe>> random(url) async {
+    // String url =
+    //     'https://api.edamam.com/api/recipes/v2?type=public&app_id=ed8282b8&app_key=%208a4d8c94b108fd3185d0d43e332d4768%09&imageSize=REGULAR&random=true';
     var response = await get(Uri.parse(url));
     Map data = jsonDecode(response.body);
     List<Recipe> recipeList = <Recipe>[];
@@ -36,9 +36,9 @@ class ApiHandler {
     return recipeList;
   }
 
-  static Future<List<Recipe>> cuisineSearch(cuisine) async {
-    String url =
-        'https://api.edamam.com/api/recipes/v2?type=public&app_id=ed8282b8&app_key=%208a4d8c94b108fd3185d0d43e332d4768&cuisineType=${cuisine}';
+  static Future<List<Recipe>> cuisineSearch(url) async {
+    // String url =
+    //     'https://api.edamam.com/api/recipes/v2?type=public&app_id=ed8282b8&app_key=%208a4d8c94b108fd3185d0d43e332d4768&cuisineType=${cuisine}';
     var response = await get(Uri.parse(url));
     Map data = jsonDecode(response.body);
     List<Recipe> recipeList = <Recipe>[];

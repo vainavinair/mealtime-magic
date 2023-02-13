@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import './intro.dart';
 import './home_page.dart';
 
@@ -45,10 +46,14 @@ class WelcomePage extends StatelessWidget {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomePage()));
                   },
-                  child: Text("CONTINUE"),
+                  child: Text(
+                    "CONTINUE",
+                    style: GoogleFonts.merriweather(
+                        fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
                   style: ElevatedButton.styleFrom(
-                    elevation: 16,
-                    shadowColor: Colors.black,
+                    backgroundColor: Color(0xffDCDCDD),
+                    foregroundColor: Color.fromARGB(255, 154, 109, 64),
                   )),
             ),
           )

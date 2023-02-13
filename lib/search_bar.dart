@@ -11,10 +11,7 @@ class SearchBar extends StatelessWidget {
     return Row(
       children: [
         GestureDetector(
-          child: Icon(
-            Icons.search,
-            color: Color(0xffC26522),
-          ),
+          child: Icon(Icons.search, color: Color(0xff000000)),
           onTap: () {
             Navigator.push(
                 context,

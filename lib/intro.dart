@@ -46,7 +46,13 @@ class _IntroState extends State<Intro> {
     return Text(
       data,
       style: GoogleFonts.abrilFatface(
-        color: Theme.of(context).primaryColor,
+        color: Color(0xffDCDCDD),
+        shadows: [
+          Shadow(
+              color: Color.fromARGB(255, 154, 109, 64).withOpacity(0.5),
+              offset: Offset(20, 4),
+              blurRadius: 5)
+        ],
         fontSize: 24,
       ),
       textAlign: TextAlign.center,
