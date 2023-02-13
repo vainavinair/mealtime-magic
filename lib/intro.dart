@@ -24,39 +24,49 @@ class _IntroState extends State<Intro> {
     "Inspiring home cooking, one recipe at a time"
   ];
   int i = 0;
-  late String data = myIntros[i];
+  ValueNotifier<String> dataNotifier =
+      ValueNotifier("Discover new flavors, one recipe at a time");
+
+  late Timer timer;
+  @override
+  void didChangeDependencies() {
+    timer = Timer.periodic(Duration(seconds: 5), (_) {
+      if (i == myIntros.length - 1) {
+        i = 0;
+      }
+      dataNotifier.value = myIntros[i + 1];
+      i++;
+      // print(i);
+    });
+    super.didChangeDependencies();
+  }
 
   @override
-  void initState() {
-    super.initState();
-    Timer.periodic(Duration(seconds: 5), (_) {
-      setState(() {
-        if (i == myIntros.length - 1) {
-          i = 0;
-        }
-        data = myIntros[i + 1];
-        i++;
-        // print(i);
-      });
-    });
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      data,
-      style: GoogleFonts.abrilFatface(
-        color: Color(0xffDCDCDD),
-        shadows: [
-          Shadow(
-              color: Color.fromARGB(255, 154, 109, 64).withOpacity(0.5),
-              offset: Offset(20, 4),
-              blurRadius: 5)
-        ],
-        fontSize: 24,
-      ),
-      textAlign: TextAlign.center,
-      softWrap: true,
-    );
+    return ValueListenableBuilder<String>(
+        valueListenable: dataNotifier,
+        builder: (context, value, child) {
+          return Text(
+            value,
+            style: GoogleFonts.abrilFatface(
+              color: Color(0xffDCDCDD),
+              shadows: [
+                Shadow(
+                    color: Color.fromARGB(255, 154, 109, 64).withOpacity(0.5),
+                    offset: Offset(20, 4),
+                    blurRadius: 5)
+              ],
+              fontSize: 24,
+            ),
+            textAlign: TextAlign.center,
+            softWrap: true,
+          );
+        });
   }
 }

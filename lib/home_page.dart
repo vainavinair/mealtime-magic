@@ -169,17 +169,37 @@ class _HomePageState extends State<HomePage> {
                                 borderRadius: BorderRadius.circular(16.0),
                                 child: Image.network(
                                   recipeList[index].image,
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Container(),
                                   fit: BoxFit.cover,
                                   height: 200,
-                                  width: MediaQuery.of(context).size.width,
                                 ),
                               ),
-                              Column(
-                                children: [
-                                  Text(recipeList[index].label),
-                                  Text(recipeList[index].cuisineType),
-                                  Text(recipeList[index].totalTime.toString())
-                                ],
+                              Positioned(
+                                right: 0,
+                                left: 0,
+                                bottom: 0,
+                                child: Container(
+                                  height: 22,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xffFFEDE9),
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(16),
+                                      bottomRight: Radius.circular(16),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      recipeList[index].label.toString(),
+                                      style: TextStyle(
+                                          color: Color(0xffB07568),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -188,7 +208,7 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ],
