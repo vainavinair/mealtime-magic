@@ -1,14 +1,13 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
 
-import 'dart:convert';
-
-import 'package:http/http.dart';
 import 'package:mealtime_magic/home_page.dart';
 import 'package:mealtime_magic/recipe_view.dart';
 import 'package:mealtime_magic/search_bar.dart';
 
 import './models/recipe.dart';
 import 'package:flutter/material.dart';
+
+import 'api_handler.dart';
 
 class ShowRecipe extends StatefulWidget {
   late String controller;
@@ -20,37 +19,19 @@ class ShowRecipe extends StatefulWidget {
 }
 
 class _ShowRecipeState extends State<ShowRecipe> {
-  _search(String query) async {
-    String url =
-        'https://api.edamam.com/api/recipes/v2?type=public&q=$query&app_id=ed8282b8&app_key=8a4d8c94b108fd3185d0d43e332d4768';
-    var response = await get(Uri.parse(url));
-    Map data = jsonDecode(response.body);
-    clearList();
-
-    data['hits'].forEach((element) {
-      Recipe recipe = Recipe();
-      recipe = Recipe.fromMap(element["recipe"]);
-      addNew(recipe);
-    });
-  }
-
   List<Recipe> recipeList = <Recipe>[];
-  void clearList() {
-    setState(() {
-      recipeList.clear();
-    });
-  }
-
-  void addNew(Recipe recipe) {
-    setState(() {
-      recipeList.add(recipe);
-    });
-  }
 
   @override
   void initState() {
     super.initState();
-    _search(widget.controller);
+    _loadRecipes();
+  }
+
+  _loadRecipes() async {
+    List<Recipe> recipes = await ApiHandler.search(widget.controller);
+    setState(() {
+      recipeList = recipes;
+    });
   }
 
   @override

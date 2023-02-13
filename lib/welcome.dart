@@ -42,10 +42,8 @@ class WelcomePage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomePage()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
                   },
                   child: Text("CONTINUE"),
                   style: ElevatedButton.styleFrom(

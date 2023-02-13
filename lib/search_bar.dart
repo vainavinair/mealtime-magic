@@ -2,9 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:mealtime_magic/show_recipe.dart';
-import './models/recipe.dart';
-import 'dart:convert';
-import 'package:http/http.dart';
 
 class SearchBar extends StatelessWidget {
   TextEditingController searchController = TextEditingController();
