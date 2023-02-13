@@ -43,7 +43,7 @@ class WelcomePage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context,
+                    Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => HomePage()));
                   },
                   child: Text(

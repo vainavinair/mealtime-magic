@@ -1,7 +1,5 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
 
-import 'dart:ui';
-
 import 'package:mealtime_magic/home_page.dart';
 import 'package:mealtime_magic/recipe_view.dart';
 import 'package:mealtime_magic/search_bar.dart';
@@ -80,14 +78,61 @@ class _ShowRecipeState extends State<ShowRecipe> {
                             width: MediaQuery.of(context).size.width,
                           ),
                         ),
-                        Card(
-                          color: Colors.white,
-                          child: Column(
-                            children: [
-                              Text(recipeList[index].label),
-                              Text(recipeList[index].cuisineType),
-                              Text(recipeList[index].totalTime.toString())
-                            ],
+                        Positioned(
+                          right: 0,
+                          left: 0,
+                          child: Container(
+                            height: 20,
+                            width: 100,
+                            padding: EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                                color: Color(0xffFFEDE9),
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.language_outlined,
+                                    size: 18,
+                                    color: Color(0xffB07568),
+                                  ),
+                                  Text(
+                                    recipeList[index].cuisineType.toUpperCase(),
+                                    style: TextStyle(
+                                        color: Color(0xffB07568),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          right: 0,
+                          left: 0,
+                          bottom: 0,
+                          child: Container(
+                            height: 20,
+                            width: 100,
+                            padding: EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                                color: Color(0xffFFEDE9),
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(5),
+                                    topRight: Radius.circular(5))),
+                            child: Center(
+                              child: Text(
+                                recipeList[index].label.toString(),
+                                style: TextStyle(
+                                    color: Color(0xffB07568),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                            ),
                           ),
                         ),
                       ],

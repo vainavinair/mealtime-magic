@@ -33,15 +33,16 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _loadRecipes(widget.urlRandom);
+    startingUrl = widget.urlRandom;
   }
 
-  _loadRecipes(url) async {
+  Future<List<Recipe>> _loadRecipes(url) async {
     List<Recipe> recipes = await ApiHandler.random(url);
-    setState(() {
-      recipeList = recipes;
-    });
+
+    return recipes;
   }
+
+  late String startingUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +93,8 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       ElevatedButton(
                           onPressed: () {
-                            _loadRecipes(widget.urlRandom);
+                            startingUrl = widget.urlRandom;
+                            setState(() {});
                           },
                           child: Text("Home")),
                       SizedBox(
@@ -100,7 +102,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            _loadRecipes(widget.urlAmerican);
+                            startingUrl = widget.urlAmerican;
+                            setState(() {});
                           },
                           child: Text("American")),
                       SizedBox(
@@ -108,7 +111,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            _loadRecipes(widget.urlItalian);
+                            startingUrl = widget.urlItalian;
+                            setState(() {});
                           },
                           child: Text("Italian")),
                       SizedBox(
@@ -116,7 +120,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            _loadRecipes(widget.urlIndian);
+                            startingUrl = widget.urlIndian;
+                            setState(() {});
                           },
                           child: Text("Indian")),
                       SizedBox(
@@ -124,7 +129,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            _loadRecipes(widget.urlJapanese);
+                            startingUrl = widget.urlJapanese;
+                            setState(() {});
                           },
                           child: Text("Japanese")),
                       SizedBox(
@@ -132,63 +138,99 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            _loadRecipes(widget.urlChinese);
+                            startingUrl = widget.urlChinese;
+                            setState(() {});
                           },
                           child: Text("Chinese"))
                     ],
                   ),
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                    ),
-                    itemCount: recipeList.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      RecipeView(recipeList[index].url)));
-                        },
-                        child: Card(
-                          elevation: 10.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.0),
+              FutureBuilder<List<Recipe>>(
+                  future: _loadRecipes(startingUrl),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.connectionState ==
+                            ConnectionState.done &&
+                        snapshot.hasData) {
+                      recipeList = snapshot.data ?? [];
+                    }
+                    return Expanded(
+                      flex: 1,
+                      child: Container(
+                        child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
                           ),
-                          margin: EdgeInsets.all(10.0),
-                          child: Stack(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(16.0),
-                                child: Image.network(
-                                  recipeList[index].image,
-                                  fit: BoxFit.cover,
-                                  height: 200,
-                                  width: MediaQuery.of(context).size.width,
+                          itemCount: recipeList.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            RecipeView(recipeList[index].url)));
+                              },
+                              child: Card(
+                                elevation: 10.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                margin: EdgeInsets.all(10.0),
+                                child: Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(16.0),
+                                      child: Image.network(
+                                        recipeList[index].image,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Container(),
+                                        fit: BoxFit.cover,
+                                        height: 200,
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 0,
+                                      left: 0,
+                                      bottom: 0,
+                                      child: Container(
+                                        height: 22,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xffFFEDE9),
+                                          borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(16),
+                                            bottomRight: Radius.circular(16),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            recipeList[index].label.toString(),
+                                            style: TextStyle(
+                                                color: Color(0xffB07568),
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w700),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Column(
-                                children: [
-                                  Text(recipeList[index].label),
-                                  Text(recipeList[index].cuisineType),
-                                  Text(recipeList[index].totalTime.toString())
-                                ],
-                              ),
-                            ],
-                          ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
-                ),
-              ),
+                      ),
+                    );
+                  }),
             ],
           ),
         ],
