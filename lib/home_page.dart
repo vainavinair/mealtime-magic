@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mealtime_magic/recipe_view.dart';
+import 'package:mealtime_magic/show_recipe.dart';
 import './search_bar.dart';
 import 'api_handler.dart';
 import 'models/recipe.dart';
@@ -30,19 +31,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Recipe> recipeList = <Recipe>[];
 
+  late String currentURL;
   @override
   void initState() {
     super.initState();
-    startingUrl = widget.urlRandom;
+    currentURL = widget.urlRandom;
   }
 
   Future<List<Recipe>> _loadRecipes(url) async {
-    List<Recipe> recipes = await ApiHandler.random(url);
-
-    return recipes;
+    recipeList = await ApiHandler.random(url);
+    return recipeList;
   }
-
-  late String startingUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +63,14 @@ class _HomePageState extends State<HomePage> {
                     borderRadius: BorderRadius.circular(30),
                     color: Color(0xffEFF2F5),
                   ),
-                  child: SearchBar(),
+                  child: SearchBar(
+                    onSubmitted: (value) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ShowRecipe(value)));
+                    },
+                  ),
                 ),
               ),
               Container(
@@ -93,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       ElevatedButton(
                           onPressed: () {
-                            startingUrl = widget.urlRandom;
+                            currentURL = widget.urlRandom;
                             setState(() {});
                           },
                           child: Text("Home")),
@@ -102,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            startingUrl = widget.urlAmerican;
+                            currentURL = widget.urlAmerican;
                             setState(() {});
                           },
                           child: Text("American")),
@@ -111,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            startingUrl = widget.urlItalian;
+                            currentURL = widget.urlItalian;
                             setState(() {});
                           },
                           child: Text("Italian")),
@@ -120,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            startingUrl = widget.urlIndian;
+                            currentURL = widget.urlIndian;
                             setState(() {});
                           },
                           child: Text("Indian")),
@@ -129,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            startingUrl = widget.urlJapanese;
+                            currentURL = widget.urlJapanese;
                             setState(() {});
                           },
                           child: Text("Japanese")),
@@ -138,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            startingUrl = widget.urlChinese;
+                            currentURL = widget.urlChinese;
                             setState(() {});
                           },
                           child: Text("Chinese"))
@@ -147,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               FutureBuilder<List<Recipe>>(
-                  future: _loadRecipes(startingUrl),
+                  future: _loadRecipes(currentURL),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
@@ -230,7 +236,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     );
-                  }),
+                  })
             ],
           ),
         ],

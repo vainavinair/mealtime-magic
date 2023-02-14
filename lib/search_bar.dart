@@ -3,7 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:mealtime_magic/show_recipe.dart';
 
-class SearchBar extends StatelessWidget {
+class SearchBar extends StatefulWidget {
+  @override
+  State<SearchBar> createState() => _SearchBarState();
+  Function(String value)? onSubmitted;
+  SearchBar({this.onSubmitted});
+}
+
+class _SearchBarState extends State<SearchBar> {
   TextEditingController searchController = TextEditingController();
 
   @override
@@ -13,10 +20,9 @@ class SearchBar extends StatelessWidget {
         GestureDetector(
           child: Icon(Icons.search, color: Color(0xff000000)),
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: ((context) => ShowRecipe(searchController.text))));
+            if (widget.onSubmitted != null) {
+              widget.onSubmitted!(searchController.text);
+            }
           },
         ),
         SizedBox(
@@ -30,11 +36,7 @@ class SearchBar extends StatelessWidget {
               border: InputBorder.none,
             ),
             // onSubmitted: (_) => _search(searchController.text),
-            onSubmitted: ((value) => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: ((context) =>
-                        ShowRecipe(searchController.text))))),
+            onSubmitted: widget.onSubmitted,
           ),
         )
       ],
