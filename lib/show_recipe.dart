@@ -93,6 +93,8 @@ class _ShowRecipeState extends State<ShowRecipe> {
                                   decoration: BoxDecoration(
                                       color: Color(0xffFFEDE9),
                                       borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(16),
+                                          topRight: Radius.circular(16),
                                           bottomRight: Radius.circular(5),
                                           bottomLeft: Radius.circular(5))),
                                   child: Center(
@@ -131,7 +133,9 @@ class _ShowRecipeState extends State<ShowRecipe> {
                                       color: Color(0xffFFEDE9),
                                       borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(5),
-                                          topRight: Radius.circular(5))),
+                                          topRight: Radius.circular(5),
+                                          bottomLeft: Radius.circular(16),
+                                          bottomRight: Radius.circular(16))),
                                   child: Center(
                                     child: Text(
                                       recipeList[index].label.toString(),
