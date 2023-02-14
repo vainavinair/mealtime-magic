@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import './intro.dart';
-import './home_page.dart';
+import 'intro.dart';
+import '../home_page.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -18,7 +18,7 @@ class WelcomePage extends StatelessWidget {
             child: Opacity(
               opacity: 0.4,
               child: Image.asset(
-                'assets/images/homeScreen.jpg',
+                'assets/images/welcome.jpg',
                 fit: BoxFit.cover,
               ),
             ),
@@ -32,7 +32,8 @@ class WelcomePage extends StatelessWidget {
                 SizedBox(
                   height: 50,
                 ),
-                SizedBox(height: 80, child: Intro()), //calling intro widget
+                //calling INTRO WIDGET
+                SizedBox(height: 80, child: Intro()),
               ],
             ),
           ),
@@ -53,7 +54,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xffDCDCDD),
-                    foregroundColor: Color.fromARGB(255, 154, 109, 64),
+                    foregroundColor: Color(0xffC26522),
                   )),
             ),
           )

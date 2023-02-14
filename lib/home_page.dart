@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mealtime_magic/recipe_view.dart';
-import './search_bar.dart';
+import './recipe_view.dart';
+import 'widgets/search_bar.dart';
 import 'api_handler.dart';
 import 'models/recipe.dart';
 
@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
       isLoading = true;
     });
 
-    List<Recipe> recipes = await ApiHandler.random(url);
+    List<Recipe> recipes = await ApiHandler.recipesByUrl(url);
     setState(() {
       recipeList = recipes;
       isLoading = false;
@@ -69,6 +69,7 @@ class _HomePageState extends State<HomePage> {
                     borderRadius: BorderRadius.circular(30),
                     color: Color(0xffEFF2F5),
                   ),
+                  // SEARCH BAR
                   child: SearchBar(),
                 ),
               ),

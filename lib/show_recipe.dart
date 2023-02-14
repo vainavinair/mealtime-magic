@@ -1,12 +1,10 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, must_be_immutable
 
-import 'dart:ui';
+import 'home_page.dart';
+import 'recipe_view.dart';
+import './widgets/search_bar.dart';
 
-import 'package:mealtime_magic/home_page.dart';
-import 'package:mealtime_magic/recipe_view.dart';
-import 'package:mealtime_magic/search_bar.dart';
-
-import './models/recipe.dart';
+import 'models/recipe.dart';
 import 'package:flutter/material.dart';
 
 import 'api_handler.dart';
@@ -30,7 +28,7 @@ class _ShowRecipeState extends State<ShowRecipe> {
   }
 
   _loadRecipes() async {
-    List<Recipe> recipes = await ApiHandler.search(widget.controller);
+    List<Recipe> recipes = await ApiHandler.recipesByquery(widget.controller);
     setState(() {
       recipeList = recipes;
     });
@@ -47,9 +45,10 @@ class _ShowRecipeState extends State<ShowRecipe> {
                   MaterialPageRoute(builder: ((context) => HomePage())));
             },
           ),
+          // SEARCH BAR
           title: SearchBar(),
         ),
-        body: recipeList.length == 0
+        body: recipeList.isEmpty
             ? Center(child: CircularProgressIndicator())
             : Container(
                 color: Theme.of(context).primaryColor,

@@ -30,6 +30,7 @@ class _IntroState extends State<Intro> {
   late Timer timer;
   @override
   void didChangeDependencies() {
+    // Start Timer
     timer = Timer.periodic(Duration(seconds: 5), (_) {
       if (i == myIntros.length - 1) {
         i = 0;
@@ -43,7 +44,7 @@ class _IntroState extends State<Intro> {
 
   @override
   void dispose() {
-    timer.cancel();
+    timer.cancel(); //STOP TIMER
     super.dispose();
   }
 
@@ -58,8 +59,8 @@ class _IntroState extends State<Intro> {
               color: Color(0xffDCDCDD),
               shadows: [
                 Shadow(
-                    color: Color.fromARGB(255, 154, 109, 64).withOpacity(0.5),
-                    offset: Offset(20, 4),
+                    color: Colors.black.withOpacity(0.5),
+                    offset: Offset(10, 1),
                     blurRadius: 5)
               ],
               fontSize: 24,

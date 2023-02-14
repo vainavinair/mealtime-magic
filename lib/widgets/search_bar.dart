@@ -1,7 +1,7 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:mealtime_magic/show_recipe.dart';
+import '../show_recipe.dart';
 
 class SearchBar extends StatelessWidget {
   TextEditingController searchController = TextEditingController();
@@ -30,7 +30,6 @@ class SearchBar extends StatelessWidget {
               hintText: "Search for a recipe",
               border: InputBorder.none,
             ),
-            // onSubmitted: (_) => _search(searchController.text),
             onSubmitted: ((value) => Navigator.push(
                 context,
                 MaterialPageRoute(

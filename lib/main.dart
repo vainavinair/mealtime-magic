@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'welcome.dart';
+import 'widgets/welcome.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,7 +10,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,13 +25,13 @@ class MyApp extends StatelessWidget {
             elevation: 8,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            backgroundColor: Color(0xffC26522), // background (button) color
-            foregroundColor: Colors.white, // foreground (text) color
+            backgroundColor: Color(0xffC26522),
+            foregroundColor: Colors.white,
           ),
         ),
       ),
       themeMode: ThemeMode.light,
-      home: WelcomePage(),
+      home: WelcomePage(), // WELCOME PAGE
     );
   }
 }
