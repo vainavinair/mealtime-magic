@@ -31,7 +31,7 @@ class _IntroState extends State<Intro> {
   @override
   void didChangeDependencies() {
     // Start Timer
-    timer = Timer.periodic(Duration(seconds: 5), (_) {
+    timer = Timer.periodic(Duration(seconds: 3), (_) {
       if (i == myIntros.length - 1) {
         i = 0;
       }
