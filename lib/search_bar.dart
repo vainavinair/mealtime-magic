@@ -5,6 +5,7 @@ import 'package:mealtime_magic/show_recipe.dart';
 
 class SearchBar extends StatelessWidget {
   TextEditingController searchController = TextEditingController();
+  late Function(String) onSubmit;
 
   @override
   Widget build(BuildContext context) {

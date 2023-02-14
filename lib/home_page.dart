@@ -29,6 +29,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Recipe> recipeList = <Recipe>[];
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -37,9 +38,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   _loadRecipes(url) async {
+    setState(() {
+      isLoading = true;
+    });
+
     List<Recipe> recipes = await ApiHandler.random(url);
     setState(() {
       recipeList = recipes;
+      isLoading = false;
     });
   }
 
@@ -139,76 +145,82 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                    ),
-                    itemCount: recipeList.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      RecipeView(recipeList[index].url)));
-                        },
-                        child: Card(
-                          elevation: 10.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.0),
+              isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Expanded(
+                      flex: 1,
+                      child: Container(
+                        child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
                           ),
-                          margin: EdgeInsets.all(10.0),
-                          child: Stack(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(16.0),
-                                child: Image.network(
-                                  recipeList[index].image,
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      Container(),
-                                  fit: BoxFit.cover,
-                                  height: 200,
+                          itemCount: recipeList.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            RecipeView(recipeList[index].url)));
+                              },
+                              child: Card(
+                                elevation: 10.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                margin: EdgeInsets.all(10.0),
+                                child: Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(16.0),
+                                      child: Image.network(
+                                        recipeList[index].image,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Container(),
+                                        fit: BoxFit.cover,
+                                        height: 200,
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 0,
+                                      left: 0,
+                                      bottom: 0,
+                                      child: Container(
+                                        height: 22,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xffFFEDE9),
+                                          borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(16),
+                                            bottomRight: Radius.circular(16),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            recipeList[index].label.toString(),
+                                            style: TextStyle(
+                                                color: Color(0xffB07568),
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w700),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Positioned(
-                                right: 0,
-                                left: 0,
-                                bottom: 0,
-                                child: Container(
-                                  height: 22,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xffFFEDE9),
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(16),
-                                      bottomRight: Radius.circular(16),
-                                    ),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      recipeList[index].label.toString(),
-                                      style: TextStyle(
-                                          color: Color(0xffB07568),
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w700),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
-                ),
-              )
+                      ),
+                    )
             ],
           ),
         ],
