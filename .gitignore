@@ -1,4 +1,7 @@
 # Miscellaneous
+*.docx
+*.pdf
+
 *.class
 *.log
 *.pyc
